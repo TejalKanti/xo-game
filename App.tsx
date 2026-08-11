@@ -1,7 +1,22 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={PlayerScreen} />
+        <Stack.Screen name="Game" component={GameScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function PlayerScreen( { navigation }: any ){
   const [player1, setPlayer1] = useState<string>("");
   const [player2, setPlayer2] = useState<string>("");
 
@@ -24,11 +39,21 @@ export default function App() {
 
      <Button 
         title= "Start Game"
-          onPress={() => console.log(`Player 1: ${player1}, Player 2: ${player2}`)} />
-
+          onPress={() => { navigation.navigate('Game'); } }
+        />
     </View>
   );
 }
+
+function GameScreen( { navigation, route }: any ){
+return (
+    <View style={styles.container}>
+      <Text>Player 1 vs. Player 2</Text>
+    </View>
+);
+}
+
+
 
 const styles = StyleSheet.create({
   container: {
