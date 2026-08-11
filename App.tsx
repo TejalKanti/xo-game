@@ -39,16 +39,17 @@ function PlayerScreen( { navigation }: any ){
 
      <Button 
         title= "Start Game"
-          onPress={() => { navigation.navigate('Game'); } }
+          onPress={() => { navigation.navigate('Game', {player1: player1, player2: player2} ); } }
         />
     </View>
   );
 }
 
 function GameScreen( { navigation, route }: any ){
+  const {player1, player2} = route.params;
 return (
     <View style={styles.container}>
-      <Text>Player 1 vs. Player 2</Text>
+       <Text style={styles.title} > {player1} vs. {player2} </Text>
     </View>
 );
 }
