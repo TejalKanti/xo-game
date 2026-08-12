@@ -49,22 +49,45 @@ function GameScreen( { navigation, route }: any ){
   const {player1, player2} = route.params;
   const [player1Turn, setPlayer1Turn] = useState<boolean>(true);
 
+// block = each block is each button on the game board
+//  0 = not yet played | 1 = Player 1 played here | 2 = Player 2 played here
+
+  const [block1, setBlock1] = useState<number>(0);
+  const [block2, setBlock2] = useState<number>(0);
+  const [block3, setBlock3] = useState<number>(0);
+  const [block4, setBlock4] = useState<number>(0);
+  const [block5, setBlock5] = useState<number>(0);
+  const [block6, setBlock6] = useState<number>(0);
+  const [block7, setBlock7] = useState<number>(0);
+  const [block8, setBlock8] = useState<number>(0);
+  const [block9, setBlock9] = useState<number>(0);
+
+  const [block1Content, setBlock1Content] = useState<string>('');
+
   const handlePress = (index: number) => {
-    console.log(`Cell ${index} pressed`);
-    setPlayer1Turn(!player1Turn);
-  };
+    // index = 0 - that is block
+    if (player1Turn){
+      setBlock1(1);
+      setBlock1Content("X");
+    }  else {
+      setBlock1(2);
+      setBlock1Content("O");
+    }
+    setPlayer1Turn(!player1Turn); // changed to the next person's turn
+  }; 
+
 
 return (
     <View style={styles.container}>
        <Text style={styles.title} > {player1} vs. {player2} </Text>
 
-      <Text>
+      <Text style={player1Turn ? styles.red : styles.blue}>
         {player1Turn ? `${player1}'s Turn` : `${player2}'s Turn`}
       </Text>
 
         <View style={styles.row}>
           <TouchableHighlight style={styles.cell} onPress={() => handlePress(0)}>
-            <Text style={styles.cellText}></Text>
+            <Text style={styles.cellText}>{block1Content}</Text>
           </TouchableHighlight>
 
           <TouchableHighlight style={styles.cell} onPress={() => handlePress(1)}>
@@ -146,5 +169,17 @@ const styles = StyleSheet.create({
   cellText: {
     fontSize: 40,
     fontWeight: 'bold',
+  },
+    red: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 26,
+    textAlign: 'center',
+  },
+  blue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 26,
+    textAlign: 'center',
   },
 });
