@@ -39,7 +39,9 @@ function PlayerScreen( { navigation }: any ){
 
      <Button 
         title= "Start Game"
-          onPress={() => { navigation.navigate('Game', {player1: player1, player2: player2} ); } }
+        onPress={() =>
+          navigation.navigate('Game', { player1: player1, player2: player2 })
+        }
         />
     </View>
   );
@@ -62,16 +64,21 @@ function GameScreen( { navigation, route }: any ){
   const [block8, setBlock8] = useState<number>(0);
   const [block9, setBlock9] = useState<number>(0);
 
-  const [block1Content, setBlock1Content] = useState<string>('');
+  let block1Content: string;
+  if(block1 === 0){
+    block1Content = '';
+  } else if (block1 === 1){
+    block1Content = 'X';
+  } else {
+    block1Content = 'O';
+  }
 
   const handlePress = (index: number) => {
     // index = 0 - that is block
     if (player1Turn){
       setBlock1(1);
-      setBlock1Content("X");
     }  else {
       setBlock1(2);
-      setBlock1Content("O");
     }
     setPlayer1Turn(!player1Turn); // changed to the next person's turn
   }; 
@@ -145,6 +152,7 @@ const styles = StyleSheet.create({
       fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 12,
+    textAlign: 'center',
   },
   input: {
     borderWidth: 1,
